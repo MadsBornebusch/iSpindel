@@ -890,7 +890,7 @@ bool isDS18B20ready()
 void initAccel()
 {
   // join I2C bus (I2Cdev library doesn't do this automatically)
-  Wire.begin(D3, D4);
+  Wire.begin(D1, D2);
   Wire.setClock(100000);
   Wire.setClockStretchLimit(2 * 230);
 
@@ -1193,6 +1193,10 @@ bool connectBackupCredentials()
 
 void setup()
 {
+  // Set RX pin as input
+  pinMode((uint8_t)3, INPUT_PULLUP);
+  // Go into config mode if RX pin is grounded
+  bool config_mode = !digitalRead((uint8_t)3);
 
   Serial.begin(115200);
 
@@ -1208,7 +1212,7 @@ void setup()
   initAccel();
 
   // decide whether we want configuration mode or normal mode
-  if (shouldStartConfig(validConf))
+  if (config_mode || shouldStartConfig(validConf))
   {
     uint32_t tmp;
     ESP.rtcUserMemoryRead(WIFIENADDR, &tmp, sizeof(tmp));
