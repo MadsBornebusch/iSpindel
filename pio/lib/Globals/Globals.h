@@ -118,6 +118,8 @@ extern Ticker flasher;
 
 #define UNINIT 0
 
+#define WIFI_PW "ILoveBeer"
+
 extern int16_t ax, ay, az;
 extern float Volt, Temperatur, Tilt, Gravity;
 

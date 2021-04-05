@@ -428,7 +428,7 @@ bool startConfiguration()
   CONSOLELN(F("started Portal"));
   char ssid[16]; //Exactly match size "iSpindel_123456\0"
   snprintf(ssid, sizeof(ssid), "iSpindel_%06X", ESP.getChipId());
-  wifiManager.startConfigPortal(ssid);
+  wifiManager.startConfigPortal(ssid, WIFI_PW);
 
   strcpy(my_polynominal, custom_polynom.getValue());
 
