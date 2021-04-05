@@ -173,11 +173,13 @@ bool SenderClass::enableHassioDiscovery(String server, uint16_t port, String use
         auto chipid = String(ESP.getChipId(), HEX);
         String device = "\"dev\": { \"name\": \"" + name + "\",\"mdl\": \"ispindel\",\"sw\": \"" + FIRMWAREVERSION + "\",\"mf\": \"iSpindel\",\"ids\": [\"" + chipid + "\"]}";
         String topic = "homeassistant/sensor/iSpindel_" + chipid + "/";
-        _mqttClient.publish((topic + "temperature/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_temp\", \"dev_cla\": \"temperature\", \"name\": \"Temperature\", \"unit_of_meas\": \"°" + unit + "\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/temperature\"," + device + "}").c_str(), true);
-        _mqttClient.publish((topic + "tilt/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_tilt\", \"name\": \"Tilt\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/tilt\"," + device + "}").c_str(), true);
-        _mqttClient.publish((topic + "battery/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_battery\", \"dev_cla\": \"voltage\", \"name\": \"Battery voltage\", \"unit_of_meas\": \"V\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/battery\"," + device + "}").c_str(), true);
-        _mqttClient.publish((topic + "rssi/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_rssi\", \"dev_cla\": \"signal_strength\", \"name\": \"Signal Strength\", \"unit_of_meas\": \"dB\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/RSSI\"," + device + "}").c_str(), true);
-        _mqttClient.publish((topic + "gravity/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_gravity\", \"name\": \"Gravity\", \"unit_of_meas\": \"°P\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/gravity\"," + device + "}").c_str(), true);
+        _mqttClient.publish((topic + "temperature/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_temp\", \"dev_cla\": \"temperature\", \"name\": \"Temperature\", \"unit_of_meas\": \"°" + unit + "\", \"ic\": \"mdi:thermometer\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/temperature\"," + device + "}").c_str(), true);
+        _mqttClient.publish((topic + "tilt/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_tilt\", \"name\": \"Tilt\", \"unit_of_meas\": \"°\", \"ic\": \"mdi:angle-acute\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/tilt\"," + device + "}").c_str(), true);
+        _mqttClient.publish((topic + "battery/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_battery\", \"dev_cla\": \"voltage\", \"name\": \"Battery voltage\", \"unit_of_meas\": \"V\", \"ic\": \"mdi:battery\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/battery\"," + device + "}").c_str(), true);
+        _mqttClient.publish((topic + "rssi/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_rssi\", \"dev_cla\": \"signal_strength\", \"name\": \"Signal Strength\", \"unit_of_meas\": \"dB\", \"ic\": \"mdi:wifi\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/RSSI\"," + device + "}").c_str(), true);
+        _mqttClient.publish((topic + "gravity/config").c_str(), ("{ \"uniq_id\": \"" + chipid + "_gravity\", \"name\": \"Specific gravity\", \"unit_of_meas\": \"kg/l\", \"ic\": \"mdi:glass-mug-variant\", \"val_tpl\": \"{{ value_json }}\", \"stat_t\": \"ispindel/" + name + "/gravity\"," + device + "}").c_str(), true);
+        _mqttClient.loop();
+        delay(1000);
         _mqttClient.loop();
     }
 
